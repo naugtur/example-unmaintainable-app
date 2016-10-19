@@ -1,0 +1,32 @@
+{
+  "name": "example-unmaintainable-app",
+  "version": "1.0.0",
+  "description": "An app for teaching maintainability",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha --recursive test/* --reporter spec --require should",
+    "coverage": "istanbul cover --include-all-sources --root src/ _mocha -- --recursive test/* --reporter spec --require should"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naugtur/example-unmaintainable-app.git"
+  },
+  "author": "naugtur",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naugtur/example-unmaintainable-app/issues"
+  },
+  "homepage": "https://github.com/naugtur/example-unmaintainable-app#readme",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "ioredis": "^2.4.0",
+    "ioredis-mock": "^2.1.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2",
+    "should": "^11.1.1"
+  }
+}
