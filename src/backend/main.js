@@ -9,11 +9,11 @@ module.exports = {
                 return redis.hgetall(key)
                     .then((user) => {
                         return {
-                            id: user.id,
-                        username: user.name,
+                             id: user.id,
+                       username: user.name,
                     displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
                         twitter: '@' + user.name,
-                            memberFor: (Date.now() - user.joined) + 'miliseconds'
+                      memberFor: (Date.now() - user.joined) + 'miliseconds'
                         }
                     })
             })
@@ -26,11 +26,11 @@ module.exports = {
         const userId = req.params.userId
         redis.hgetall(`users:${userId}`)
             .then((user) => ({
-                id: user.id,
-            username: user.name,
+                 id: user.id,
+           username: user.name,
         displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
             twitter: '@' + user.name,
-                memberFor: (Date.now() - user.joined) + 'miliseconds'
+          memberFor: (Date.now() - user.joined) + 'miliseconds'
             })).then(result => {
                 res.json(result)
             })
@@ -47,11 +47,11 @@ module.exports = {
                     redis.set('nextuser', nextId++)
                 ]).then(() => {
                     res.status(200).json({
-                        id: nextId,
-                    username: name,
+                         id: nextId,
+                   username: name,
                 displayName: name.charAt(0).toUpperCase() + name.slice(1),
                     twitter: '@' + name,
-                        memberFor: (Date.now() - joined) + 'miliseconds'
+                  memberFor: (Date.now() - joined) + 'miliseconds'
                     })
                 })
             })
