@@ -2,6 +2,7 @@
 
 An app for teaching maintainability. Badly written on purpose.
 
+I even went in and broke code formatting and conventions to trigger lint...
 
 ## TODO
 in no particular order

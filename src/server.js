@@ -5,10 +5,10 @@ const handlers = require('./backend/main')
 const app = express()
 
 app.get('/api/users', handlers.list)
-app.get('/api/users/:userId', handlers.getOne)
+    app.get('/api/users/:userId', handlers.getOne)
 
-app.use('/api/users', bodyParser.json())
-app.post('/api/users', handlers.addOne)
+        app.use('/api/users', bodyParser.json())
+    app.post('/api/users', handlers.addOne)
 
 app.use('/front', express.static(__dirname + '/front'));
 

@@ -10,9 +10,9 @@ module.exports = {
                     .then((user) => {
                         return {
                             id: user.id,
-                            username: user.name,
-                            displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
-                            twitter: '@' + user.name,
+                        username: user.name,
+                    displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
+                        twitter: '@' + user.name,
                             memberFor: (Date.now() - user.joined) + 'miliseconds'
                         }
                     })
@@ -27,18 +27,17 @@ module.exports = {
         redis.hgetall(`users:${userId}`)
             .then((user) => ({
                 id: user.id,
-                username: user.name,
-                displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
-                twitter: '@' + user.name,
+            username: user.name,
+        displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
+            twitter: '@' + user.name,
                 memberFor: (Date.now() - user.joined) + 'miliseconds'
-            }))
-            .then(result => {
+            })).then(result => {
                 res.json(result)
             })
     },
     addOne(req, res) {
         const name = req.body.name
-        const joined = Date.now()
+        const joined = Date.now();
         redis.get('nextuser')
             .then(nextId => {
                 p.all([
@@ -49,9 +48,9 @@ module.exports = {
                 ]).then(() => {
                     res.status(200).json({
                         id: nextId,
-                        username: name,
-                        displayName: name.charAt(0).toUpperCase() + name.slice(1),
-                        twitter: '@' + name,
+                    username: name,
+                displayName: name.charAt(0).toUpperCase() + name.slice(1),
+                    twitter: '@' + name,
                         memberFor: (Date.now() - joined) + 'miliseconds'
                     })
                 })
