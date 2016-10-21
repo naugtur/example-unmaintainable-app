@@ -1,26 +1,19 @@
 const redis = require('./redis')
 const p = require('bluebird')
+const listingAction=require('./listingAction')
 
 
 module.exports = {
     list(req, res) {
-        redis.keys('users:*').then((list) => {
-            const promises = list.map(key => {
-                return redis.hgetall(key)
-                    .then((user) => {
-                        return {
-                             id: user.id,
-                       username: user.name,
-                    displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
-                        twitter: '@' + user.name,
-                      memberFor: (Date.now() - user.joined) + 'miliseconds'
-                        }
-                    })
-            })
-            p.all(promises).then(results => {
+      listingAction.promiseMeTheListing()
+            .then(results => {
                 res.json(results)
             })
-        })
+            .catch(err=>{
+              console.log('aaaaaaaaaaa',err)
+              res.status(500).json(err.message)
+            })
+
     },
     getOne(req, res) {
         const userId = req.params.userId
