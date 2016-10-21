@@ -4,23 +4,10 @@ const p = require('bluebird')
 
 module.exports = {
     list(req, res) {
-        redis.keys('users:*').then((list) => {
-            const promises = list.map(key => {
-                return redis.hgetall(key)
-                    .then((user) => {
-                        return {
-                             id: user.id,
-                       username: user.name,
-                    displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
-                        twitter: '@' + user.name,
-                      memberFor: (Date.now() - user.joined) + 'miliseconds'
-                        }
-                    })
-            })
-            p.all(promises).then(results => {
+        promiseMeTheListing()
+            .then(results => {
                 res.json(results)
             })
-        })
     },
     getOne(req, res) {
         const userId = req.params.userId
