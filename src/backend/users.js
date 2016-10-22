@@ -1,8 +1,7 @@
 const router = require('express').Router();
-const listingAction = require('./listingAction');
 
 router.get('/users', (req, res) => {
-    listingAction.promiseMeTheListing()
+    req.app.get('DatabaseConnector').promiseMeTheListing()
         .then(results => {
             res.json(results);
         });
