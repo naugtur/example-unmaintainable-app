@@ -10,8 +10,15 @@ router.get('/users', (req, res) => {
 
 router.get('/users/:userId', (req, res) => {
     const userId = req.params.userId;
-    req.app.get('DatabaseConnector').promiseMeTheOne(userId)
-        .then(result => res.json(result));
+    req.app.get('DatabaseConnector').promiseMeTheOne(userId, (result, err) => {
+        if (err) {
+            res.status(500).json({
+                error: err.message
+            });
+        } else {
+            res.json(result);
+        }
+    })
 
 });
 
