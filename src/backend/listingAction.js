@@ -1,5 +1,5 @@
-const redis = require('./redis');
 const p = require('bluebird');
+const databaseConnector = require('./databaseConnector');
 
 module.exports = {
     callbackMeTheListing(callback){
@@ -27,9 +27,9 @@ module.exports = {
 
 };
 async function getAll() {
-    return redis.keys('users:*').then((list) => {
+    return await databaseConnector.getDatabaseKeys('users:*').then((list) => {
         const promises = list.map(key => {
-            return redis.hgetall(key)
+            return databaseConnector.getDatabaseAll(key)
                 .then((user) => {
                     return {
                         id: user.id,
@@ -46,7 +46,7 @@ async function getAll() {
 
 async function getSingleUser(userId) {
     try {
-        return await redis.hgetall(`users:${userId}`).then(result => {
+        return await  databaseConnector.getDatabaseAll(`users:${userId}`).then(result => {
             if (!result) throw "-not exist-";
             return result;
         }).then((user) => {

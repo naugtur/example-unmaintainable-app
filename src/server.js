@@ -4,7 +4,7 @@ const handlers = require('./backend/main');
 const app = express();
 const listingAction = require('./backend/listingAction');
 
-app.set('DatabaseConnector', listingAction);
+app.set('UsersService', listingAction);
 
 app.use('/api/users', bodyParser.json());
 
