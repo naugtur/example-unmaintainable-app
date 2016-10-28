@@ -9,7 +9,7 @@ router.get('/users', (req, res) => {
         } else {
             res.json(result);
         }
-    })
+    });
 });
 
 router.get('/users/:userId', (req, res) => {
@@ -22,7 +22,7 @@ router.get('/users/:userId', (req, res) => {
         } else {
             res.json(result);
         }
-    })
+    });
 
 });
 
