@@ -19,12 +19,19 @@ module.exports = {
             return p.all(promises);
         });
     },
-    promiseMeTheOne(userId, callback){
-        return getSingleUser(userId).then(result => {
-            callback(result);
-        }).catch(error => {
-            callback([], error);
-        });
+    callbackMeTheOne(userId, callback){
+
+        if (Number.isInteger(userId)) {
+            getSingleUser(userId).then(result => {
+                callback(result);
+            }).catch(error => {
+                callback([], error);
+            });
+        }
+        else {
+            callback([], {message: "to nie liczba"});
+        }
+
 
     }
 

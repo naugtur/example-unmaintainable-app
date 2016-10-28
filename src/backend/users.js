@@ -9,8 +9,8 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/users/:userId', (req, res) => {
-    const userId = req.params.userId;
-    req.app.get('DatabaseConnector').promiseMeTheOne(userId, (result, err) => {
+    const userId = parseInt(req.params.userId);
+    req.app.get('DatabaseConnector').callbackMeTheOne(userId, (result, err) => {
         if (err) {
             res.status(500).json({
                 error: err.message
