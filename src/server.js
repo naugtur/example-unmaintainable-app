@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const handlers = require('./backend/main');
 const app = express();
 const listingAction = require('./backend/listingAction');
+const errorHandler = require('./backend/errorHandler');
 
 app.set('UsersService', listingAction);
+app.set('ErrorHandler', errorHandler);
 
 app.use('/api/users', bodyParser.json());
 

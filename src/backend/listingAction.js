@@ -19,7 +19,7 @@ module.exports = {
             });
         }
         else {
-            callback([], {message: "to nie liczba"});
+            callback([], {message: "to nie liczba", type: 400});
         }
 
 
@@ -47,7 +47,7 @@ async function getAll() {
 async function getSingleUser(userId) {
     try {
         return await  databaseConnector.getDatabaseAll(`users:${userId}`).then(result => {
-            if (!result) throw "-not exist-";
+            if (!result) throw  {message: "-not exist-", type: 404};
             return result;
         }).then((user) => {
             return {
@@ -60,10 +60,9 @@ async function getSingleUser(userId) {
         })
     }
     catch (err) {
-        console.log('fetch failed', err);
         return new Promise((resolve, reject) => {
 
-            reject({message: err})
+            reject(err)
         })
     }
 
