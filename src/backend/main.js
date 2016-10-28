@@ -1,22 +1,9 @@
 const redis = require('./redis');
 const p = require('bluebird');
 
-
-
-
+const list = require('./listingAction');
 module.exports = {
 
-    getOne(req, res) {
-        const userId = req.params.userId;
-        redis.hgetall(`users:${userId}`)
-            .then((user) => ({
-                id: user.id,
-                username: user.name,
-                displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
-                twitter: '@' + user.name,
-                memberFor: (Date.now() - user.joined) + 'miliseconds'
-            })).then(result => res.json(result));
-    },
     addOne(req, res) {
         const name = req.body.name;
         const joined = Date.now();

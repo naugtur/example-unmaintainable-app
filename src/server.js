@@ -6,7 +6,6 @@ const listingAction = require('./backend/listingAction');
 
 app.set('DatabaseConnector', listingAction);
 
-app.get('/api/users/:userId', handlers.getOne);
 app.use('/api/users', bodyParser.json());
 
 app.post('/api/users', handlers.addOne);
