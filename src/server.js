@@ -10,7 +10,6 @@ app.set('ErrorHandler', errorHandler);
 
 app.use('/api/users', bodyParser.json());
 
-app.post('/api/users', handlers.addOne);
 app.use('/api', require('./backend/users'));
 
 /*eslint-disable */

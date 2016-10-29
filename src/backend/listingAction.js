@@ -1,5 +1,6 @@
 const p = require('bluebird');
 const databaseConnector = require('./databaseConnector');
+const redis = require('./redis');
 
 module.exports = {
     callbackMeTheListing(callback){
@@ -21,10 +22,13 @@ module.exports = {
         else {
             callback([], {message: "to nie liczba", type: 400});
         }
-
-
+    },
+    callbackMeAddOne(name, callback){
+        const joined = Date.now();
+        addOne(name, joined).then((user) => {
+            callback(user);
+        })
     }
-
 };
 async function getAll() {
     return await databaseConnector.getDatabaseKeys('users:*').then((list) => {
@@ -65,6 +69,34 @@ async function getSingleUser(userId) {
             reject(err)
         })
     }
+}
 
+async function addOne(name, joined) {
+    try {
+        return await redis.get('nextuser')
+        .then(nextId => {
+            return  p.all([
+                redis.hset(`user:${nextId}`, 'id', nextId),
+                redis.hset(`user:${nextId}`, 'name', name),
+                redis.hset(`user:${nextId}`, 'joined', joined),
+                redis.set('nextuser', nextId++)
+            ]).then(() => {
+                return {
+                    id: nextId,
+                    username: name,
+                    displayName: name.charAt(0).toUpperCase() + name.slice(1),
+                    twitter: '@' + name,
+                    memberFor: (Date.now() - joined) + 'miliseconds'
+                }
+            })
+        });
 
+    }
+    catch (err) {
+        return new Promise((resolve, reject) => {
+
+            reject(err)
+        })
+
+    }
 }

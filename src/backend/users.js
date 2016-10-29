@@ -14,4 +14,11 @@ router.get('/users/:userId', (req, res) => {
 
 });
 
+router.post('/users', (req, res) => {
+    const name = req.body.name;
+    req.app.get('UsersService').callbackMeAddOne(name, (result, err) => {
+        req.app.get('ErrorHandler').returnResponse(result, err, res);
+    })
+});
+
 module.exports = router;
