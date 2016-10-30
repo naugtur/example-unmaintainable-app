@@ -1,6 +1,6 @@
 const p = require('bluebird');
 const databaseConnector = require('./databaseConnector');
-const redis = require('./redis');
+const User = require('./user');
 
 module.exports = {
     callbackMeTheListing(callback){
@@ -35,13 +35,11 @@ async function getAll() {
         const promises = list.map(key => {
             return databaseConnector.getDatabaseAll(key)
                 .then((user) => {
-                    return {
+                    return new User({
                         id: user.id,
-                        username: user.name,
-                        displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
-                        twitter: '@' + user.name,
-                        memberFor: (Date.now() - user.joined) + 'miliseconds'
-                    };
+                        name: user.name,
+                        joined: user.joined
+                    }).display();
                 });
         });
         return p.all(promises);
@@ -54,13 +52,11 @@ async function getSingleUser(userId) {
             if (!result) throw  {message: "-not exist-", type: 404};
             return result;
         }).then((user) => {
-            return {
+            return new User({
                 id: user.id,
-                username: user.name,
-                displayName: user.name.charAt(0).toUpperCase() + user.name.slice(1),
-                twitter: '@' + user.name,
-                memberFor: (Date.now() - user.joined) + 'miliseconds'
-            }
+                name: user.name,
+                joined: user.joined
+            }).display();
         })
     }
     catch (err) {
@@ -73,24 +69,19 @@ async function getSingleUser(userId) {
 
 async function addOne(name, joined) {
     try {
-        return await redis.get('nextuser')
-        .then(nextId => {
-            return  p.all([
-                redis.hset(`user:${nextId}`, 'id', nextId),
-                redis.hset(`user:${nextId}`, 'name', name),
-                redis.hset(`user:${nextId}`, 'joined', joined),
-                redis.set('nextuser', nextId++)
-            ]).then(() => {
-                return {
-                    id: nextId,
-                    username: name,
-                    displayName: name.charAt(0).toUpperCase() + name.slice(1),
-                    twitter: '@' + name,
-                    memberFor: (Date.now() - joined) + 'miliseconds'
-                }
-            })
+        let user = new User({
+            name: name,
+            joined: joined
         });
 
+        return await databaseConnector.setDataToDataBase(user,'user')
+            .then((user) => {
+                return new User({
+                    id: user.id,
+                    name: user.name,
+                    joined: user.joined
+                }).display();
+            })
     }
     catch (err) {
         return new Promise((resolve, reject) => {
