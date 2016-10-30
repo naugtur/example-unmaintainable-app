@@ -18,7 +18,7 @@ module.exports = {
                     const tabId = `${table}:${nextId}`;
                     promises = [redis.hset(tabId, 'id', nextId)];
                     keys.map(key => {
-                        promises = [...promises, redis.hset(tabId, key, value[key])]
+                        promises = [...promises, redis.hset(tabId, key, value[key])];
                     });
                     promises = [...promises, redis.set(`next${table}`, nextId++)];
                 });
@@ -34,9 +34,9 @@ module.exports = {
                     });
 
                     return object;
-                })
-            })
+                });
+            });
 
     }
 
-}
+};

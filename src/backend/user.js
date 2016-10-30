@@ -1,8 +1,8 @@
 module.exports = class User {
     constructor(options) {
-        this.id = options.id || "no id";
-        this.name = options.name || "no name";
-        this.joined = options.joined || "joined For";
+        this.id = options.id || 'no id';
+        this.name = options.name || 'no name';
+        this.joined = options.joined || 'joined For';
 
     }
 
@@ -13,7 +13,7 @@ module.exports = class User {
             displayName: this.name.charAt(0).toUpperCase() + this.name.slice(1),
             twitter: '@' + this.name,
             memberFor: (Date.now() - this.joined) + 'miliseconds'
-        }
+        };
     }
 
     prepareToInsert(callback) {

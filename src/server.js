@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const handlers = require('./backend/main');
 const app = express();
 const listingAction = require('./backend/listingAction');
 const errorHandler = require('./backend/errorHandler');
