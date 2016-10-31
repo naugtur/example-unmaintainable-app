@@ -1,23 +1,21 @@
 const p = require('bluebird');
 const databaseConnector = require('./databaseConnector');
 const User = require('./user');
-
+const functionCallback = (func, callback) => {
+    func.then(results => {
+        callback(results);
+    }).catch(error => {
+        callback([], error);
+    });
+}
 module.exports = {
     callbackMeTheListing(callback){
-        getAll().then(results => {
-            callback(results);
-        }).catch(error => {
-            callback([], error);
-        });
+        functionCallback(getAll(), callback);
     },
     callbackMeTheOne(userId, callback){
 
         if (Number.isInteger(userId)) {
-            getSingleUser(userId).then(result => {
-                callback(result);
-            }).catch(error => {
-                callback([], error);
-            });
+            functionCallback(getSingleUser(userId), callback);
         }
         else {
             callback([], {message: "to nie liczba", type: 400});
@@ -25,13 +23,11 @@ module.exports = {
     },
     callbackMeAddOne(name, callback){
         const joined = Date.now();
-        addOne(name, joined).then((user) => {
-            callback(user);
-        })
+        functionCallback(addOne(name, joined), callback);
     }
 };
-async function getAll() {
-    return await databaseConnector.getDatabaseKeys('users:*').then((list) => {
+function getAll() {
+    return databaseConnector.getDatabaseKeys('users:*').then((list) => {
         const promises = list.map(key => {
             return databaseConnector.getDatabaseAll(key)
                 .then((user) => {
@@ -46,9 +42,9 @@ async function getAll() {
     });
 }
 
-async function getSingleUser(userId) {
+function getSingleUser(userId) {
     try {
-        return await  databaseConnector.getDatabaseAll(`users:${userId}`).then(result => {
+        return databaseConnector.getDatabaseAll(`users:${userId}`).then(result => {
             if (!result) throw  {message: "-not exist-", type: 404};
             return result;
         }).then((user) => {
@@ -67,14 +63,14 @@ async function getSingleUser(userId) {
     }
 }
 
-async function addOne(name, joined) {
+function addOne(name, joined) {
     try {
         let user = new User({
             name: name,
             joined: joined
         });
 
-        return await databaseConnector.setDataToDataBase(user,'user')
+        return databaseConnector.setDataToDataBase(user, 'user')
             .then((user) => {
                 return new User({
                     id: user.id,
