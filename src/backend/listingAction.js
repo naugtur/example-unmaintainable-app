@@ -7,7 +7,7 @@ const functionCallback = (func, callback) => {
     }).catch(error => {
         callback([], error);
     });
-}
+};
 module.exports = {
     callbackMeTheListing(callback){
         functionCallback(getAll(), callback);
@@ -18,7 +18,7 @@ module.exports = {
             functionCallback(getSingleUser(userId), callback);
         }
         else {
-            callback([], {message: "to nie liczba", type: 400});
+            callback([], {message: 'to nie liczba', type: 400});
         }
     },
     callbackMeAddOne(name, callback){
@@ -45,7 +45,7 @@ function getAll() {
 function getSingleUser(userId) {
     try {
         return databaseConnector.getDatabaseAll(`users:${userId}`).then(result => {
-            if (!result) throw  {message: "-not exist-", type: 404};
+            if (!result) throw  {message: '-not exist-', type: 404};
             return result;
         }).then((user) => {
             return new User({
@@ -53,13 +53,13 @@ function getSingleUser(userId) {
                 name: user.name,
                 joined: user.joined
             }).display();
-        })
+        });
     }
     catch (err) {
         return new Promise((resolve, reject) => {
 
-            reject(err)
-        })
+            reject(err);
+        });
     }
 }
 
@@ -77,13 +77,13 @@ function addOne(name, joined) {
                     name: user.name,
                     joined: user.joined
                 }).display();
-            })
+            });
     }
     catch (err) {
         return new Promise((resolve, reject) => {
 
-            reject(err)
-        })
+            reject(err);
+        });
 
     }
 }
