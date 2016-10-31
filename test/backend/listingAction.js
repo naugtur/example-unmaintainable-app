@@ -41,4 +41,26 @@ describe('listingAction', () => {
         }))
     })
 
+    it('should return a single user with twitter handles', () => {
+        return listingAction.callbackMeTheOne(1, ((result, err) => {
+            result.twitter.should.be.type('string')
+
+        }))
+    })
+
+    it('should return its not number error', () => {
+        return listingAction.callbackMeTheOne('asdas', ((result, err) => {
+            err.message.should.be.type('string');
+            err.type.should.be.type('number');
+            err.message.should.eql('to nie liczba');
+        }))
+    })
+
+    it('should return its not found', () => {
+        return listingAction.callbackMeTheOne(4, ((result, err) => {
+            err.message.should.be.type('string');
+            err.type.should.be.type('number');
+            err.type.should.eql(404);
+        }))
+    })
 });
