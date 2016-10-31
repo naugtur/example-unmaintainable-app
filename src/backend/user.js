@@ -1,7 +1,7 @@
 module.exports = class User {
     constructor(options) {
         this.id = options.id || 'no id';
-        this.name = options.name || 'no name';
+        this.name = options.name || 'no name'; // test fail if empty
         this.joined = options.joined || 'joined For';
 
     }
