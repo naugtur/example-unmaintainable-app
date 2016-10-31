@@ -1,19 +1,27 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const handlers = require('./backend/main')
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const listingAction = require('./backend/listingAction');
+const errorHandler = require('./backend/errorHandler');
 
-const app = express()
+app.set('UsersService', listingAction);
+app.set('ErrorHandler', errorHandler);
 
-app.get('/api/users', handlers.list)
-    app.get('/api/users/:userId', handlers.getOne)
+app.use('/api/users', bodyParser.json());
 
-        app.use('/api/users', bodyParser.json())
-    app.post('/api/users', handlers.addOne)
+app.use('/api', require('./backend/users'));
 
+/*eslint-disable */
 app.use('/front', express.static(__dirname + '/front'));
 
 module.exports = {
     start(){
-        app.listen(1337)
+        const server = app.listen(1337, function () {
+            const port = server.address().port;
+
+            console.log('Example app listening at http://127.0.0.1:%s', port);
+            /*eslint-enable */
+        });
     }
-}
+};
+
