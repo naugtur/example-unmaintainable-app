@@ -63,4 +63,14 @@ describe('listingAction', () => {
             err.type.should.eql(404);
         }))
     })
+
+    it('should return add new', () => {
+        return listingAction.callbackMeAddOne('ktos', ((result, err) => {
+            result.id.should.be.type('number');
+            result.username.should.be.type('string');
+            result.displayName.should.be.type('string');
+            result.twitter.should.be.type('string');
+            result.memberFor.should.be.type('string');
+        }))
+    })
 });
