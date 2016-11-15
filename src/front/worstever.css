@@ -1,0 +1,11 @@
+
+.main{
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid #555;
+  padding: 10px;
+}
+
+.user, .list {
+  padding: 10px;
+}
