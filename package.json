@@ -4,8 +4,8 @@
   "description": "An app for teaching maintainability",
   "main": "app.js",
   "scripts": {
-    "lint" : "eslint src",
-    "test": "mocha --recursive test/* --reporter spec --require should",
+    "lint": "eslint src",
+    "test": "npm run lint & mocha --recursive test/* --reporter spec --require should",
     "coverage": "istanbul cover --include-all-sources --root src/ _mocha -- --recursive test/* --reporter spec --require should"
   },
   "repository": {

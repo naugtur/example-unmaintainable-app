@@ -1,16 +1,16 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const handlers = require('./backend/main')
+const handlers = require('./backend/controller/UserController')
 
 const app = express()
+const __dirname='.'
+app.get('/api/users', handlers.findAll)
+app.get('/api/users/:userId', handlers.findOne)
 
-app.get('/api/users', handlers.list)
-    app.get('/api/users/:userId', handlers.getOne)
+app.use('/api/users', bodyParser.json())
+app.post('/api/users', handlers.saveOne)
 
-        app.use('/api/users', bodyParser.json())
-    app.post('/api/users', handlers.addOne)
-
-app.use('/front', express.static(__dirname + '/front'));
+app.use('/front', express.static(__dirname + '/front'))
 
 module.exports = {
     start(){

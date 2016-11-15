@@ -1,8 +1,8 @@
 //fake redis, but easy to replace with real thing. just replace this with ioredis
-var RedisMock = require('ioredis-mock').default;
+var RedisMock = require('ioredis-mock').default
 var redis = new RedisMock({
     data: {}
-});
+})
 
 redis.hset('users:1', 'id', 1)
 redis.hset('users:1', 'name', 'john')
