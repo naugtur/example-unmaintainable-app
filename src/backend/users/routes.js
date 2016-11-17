@@ -7,6 +7,6 @@ const routes = app => {
   app.get('/api/users/:userId', usersActions.show);
   app.post('/api/users', usersActions.create);
   return app;
-}
+};
 
 module.exports = routes;

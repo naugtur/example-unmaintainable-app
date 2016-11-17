@@ -21,7 +21,7 @@ const index = (req, res) => {
 };
 
 const show = (req, res) => {
-  const userId = req.params.userId
+  const userId = req.params.userId;
   redis.hgetall(`users:${userId}`).then((user) => ({
     id: user.id,
     username: user.name,
@@ -58,4 +58,4 @@ module.exports = {
   index,
   show,
   create,
-}
+};

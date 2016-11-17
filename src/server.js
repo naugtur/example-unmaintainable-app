@@ -10,4 +10,4 @@ module.exports = {
   start() {
     app.listen(1337);
   }
-}
+};
