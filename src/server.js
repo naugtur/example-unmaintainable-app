@@ -1,8 +1,9 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const handlers = require('./backend/main')
+const express = require('express');
+const usersRoutes = require('./backend/users/routes');
 
-const app = express()
+let app = express();
+
+app = userRoutes(app);
 
 app.get('/api/users', handlers.list)
     app.get('/api/users/:userId', handlers.getOne)
