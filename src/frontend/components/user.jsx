@@ -12,7 +12,10 @@ const User = ((props) =>
     </div>))
 
 User.propTypes = {
-  Users: PropTypes.array.isRequired
+  username: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
+  twitter: PropTypes.string.isRequired,
+  memberFor: PropTypes.string.isRequired,
 }
 
 export default User
