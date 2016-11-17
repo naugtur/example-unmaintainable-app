@@ -3,7 +3,7 @@ const userSavingService = require('./../service/UserSavingService')
 
 
 module.exports = {
-    findAll(res) {
+    findAll(req,res) {
         userFindingService.findAll()
             .then(results => {
                 res.json(results)

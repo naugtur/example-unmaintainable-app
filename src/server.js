@@ -1,9 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const handlers = require('./backend/controller/UserController')
-
+/*global __dirname*/
 const app = express()
-const __dirname='.'
+
 app.get('/api/users', handlers.findAll)
 app.get('/api/users/:userId', handlers.findOne)
 
