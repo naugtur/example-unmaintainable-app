@@ -11,7 +11,7 @@ function listItems(items){
 }
 
 const List = ((props) =>
-    (<div className="list">
+    (<div className="list x">
       {listItems(props.items)}
     </div>))
 
