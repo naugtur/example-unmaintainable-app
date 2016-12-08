@@ -1,21 +1,34 @@
-import React, {PropTypes} from "react"
+import React, { PropTypes, Component } from 'react';
 
+export default class User extends Component {
+  static propTypes: {
+    id: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired,
+    fetchUser: PropTypes.func.isRequired,
+  };
 
-const User = ((props) =>
-    (<div className="user">
-      <ul>
-        <li className="name">{props.username}</li>
-        <li>name: {props.displayName}</li>
-        <li>twitter: {props.twitter}</li>
-        <li>memberFor: {props.memberFor}</li>
-      </ul>
-    </div>))
+  constructor(props) {
+    super(props);
+    this.fetchUser = this.fetchUser.bind(this);
+    this.fetchUser();
+  };
 
-User.propTypes = {
-  username: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  twitter: PropTypes.string.isRequired,
-  memberFor: PropTypes.string.isRequired,
-}
+  fetchUser() { this.props.fetchUser(this.props.id); };
 
-export default User
+  render() {
+    const { user } = this.props;
+    return (
+      <div className="app">
+        <div className="user">
+          <ul>
+            <li className="name">{user.get('username')}</li>
+            <li>name: {user.get('displayName')}</li>
+            <li>twitter: {user.get('twitter')}</li>
+            <li>memberFor: {user.get('memberFor')}</li>
+          </ul>
+        </div>
+        <button onClick={this.fetchUser}>refresh</button>
+      </div>
+    );
+  };
+};

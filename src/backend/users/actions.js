@@ -15,7 +15,7 @@ const index = (req, res) => {
       });
     });
     p.all(promises).then(results => {
-      res.json(results);
+      res.json({ users: results });
     });
   });
 };
