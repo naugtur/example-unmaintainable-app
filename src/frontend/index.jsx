@@ -1,41 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom"
+import {Router, Route, hashHistory} from "react-router"
 
-import List from "./components/list.jsx";
-import User from "./components/user.jsx";
+import {Provider} from "react-redux";
+import {syncHistoryWithStore} from "react-router-redux"
 
-function loadAll() {
-    fetch("/api/users").then((response) => (response.json())).then(renderAll)
-}
+import {createStore, applyMiddleware} from "redux";
+import logger from "redux-logger";
+import promiseMiddleware from "redux-promise-middleware";
 
-function renderAll(items) {
-    ReactDOM.render(
-        <div className="app">
-        <List items={items}/>
-        <button onClick={loadAll}>refresh</button>
-    </div>, document.querySelector(".main"))
-}
+import masterReducer from "./masterReducer";
+import List from "./list/list.jsx";
+import User from "./user/user.jsx";
 
-function loadOne(id) {
-    fetch("/api/users/" + id).then((response) => (response.json())).then(renderOne)
-}
+import listAction from "./list/listAction";
+import userAction from "./user/userAction";
 
-function renderOne(user) {
-    ReactDOM.render(
-        <div className="app">
-        <User {...user}/>
-        <button onClick={loadOne.bind(null,user.id)}>refresh</button>
-    </div>, document.querySelector(".main"))
-}
+const middleware = [promiseMiddleware(), logger()];
+const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
+const store = createStoreWithMiddleware(masterReducer);
+const enhancedHistory = syncHistoryWithStore(hashHistory, store)
 
-function router() {
-    //worst routing I've ever seen
-    if (window.location.hash) {
-        loadOne(window.location.hash.substring(1))
-    } else {
-        loadAll()
-    }
-}
-
-router()
-window.addEventListener("hashchange",router)
+ReactDOM.render(
+    <Provider store={store}>
+    <Router history={enhancedHistory}>
+        <Route path="/" getComponents={(nextState, cb) => {
+            store.dispatch(listAction());
+            cb(null, List)
+        }}/>
+        <Route path="/:id" getComponents={(nextState, cb) => {
+            store.dispatch(userAction(nextState.params.id));
+            cb(null, User)
+        }}/>
+    </Router>
+</Provider>, document.querySelector(".main"))

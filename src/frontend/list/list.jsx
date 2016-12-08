@@ -1,4 +1,6 @@
 import React, {PropTypes} from "react"
+import { connect } from "react-redux"
+import listAction from "./listAction"
 
 function listItems(items){
   return items.map(item =>
@@ -6,17 +8,18 @@ function listItems(items){
     <span className="main">
     {item.displayName}
     </span>
-    <a href={"#"+item.id}>details</a>
+    <a href={"#/"+item.id}>details</a>
     </div>)
 }
 
-const List = ((props) =>
-    (<div className="list x">
+const List = ((props) => {
+  return (<div className="list x">
       {listItems(props.items)}
-    </div>))
+    </div>)
+  })
 
 List.propTypes = {
   items: PropTypes.array.isRequired
 }
 
-export default List
+export default connect(state => (state.list))(List)

@@ -1,8 +1,9 @@
 import React, {PropTypes} from "react"
-
+import { connect } from "react-redux"
 
 const User = ((props) =>
     (<div className="user">
+    {props.params.id}
       <ul>
         <li className="name">{props.username}</li>
         <li>name: {props.displayName}</li>
@@ -18,4 +19,4 @@ User.propTypes = {
   memberFor: PropTypes.string.isRequired,
 }
 
-export default User
+export default connect(state => (state.user))(User)
