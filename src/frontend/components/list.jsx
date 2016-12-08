@@ -6,14 +6,12 @@ function listItems(items){
     <span className="main">
     {item.displayName}
     </span>
-    <em> {item.memberFor}</em>
-    <em> {item.twitter}</em>
-
+    <a href={"#"+item.id}>details</a>
     </div>)
 }
 
 const List = ((props) =>
-    (<div className="list">
+    (<div className="list x">
       {listItems(props.items)}
     </div>))
 
