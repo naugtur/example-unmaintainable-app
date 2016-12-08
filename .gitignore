@@ -1,3 +1,6 @@
+# Mac OS system files 
+.DS_Store
+
 # Logs
 logs
 *.log
@@ -37,4 +40,4 @@ jspm_packages
 .node_repl_history
 
 # build results
-src/front/js
+dist/bundle.*
