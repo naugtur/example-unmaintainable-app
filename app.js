@@ -1,1 +1,1 @@
-require('./src/server').start()
+require('./src/backend/server').start()

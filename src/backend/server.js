@@ -1,10 +1,10 @@
 const express = require('express');
-const routes = require('./backend/routes');
+const routes = require('./routes');
 
 let app = express();
 app = routes(app);
 
-app.use('/front', express.static(__dirname + '/front'));
+app.use('/', express.static(__dirname + '/../../dist'));
 
 module.exports = {
   start() {

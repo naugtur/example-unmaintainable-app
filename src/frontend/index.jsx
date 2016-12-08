@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom"
 
-import List from "./components/list.jsx";
-import User from "./components/user.jsx";
+import './styles/application.scss';
+
+import List from "./js/components/list.jsx";
+import User from "./js/components/user.jsx";
 
 function loadAll() {
     fetch("/api/users").then((response) => (response.json())).then(renderAll)
