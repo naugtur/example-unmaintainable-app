@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './src/frontend/index.jsx',
+  entry: './src/frontend/index.js',
   devtool: 'source-map',
   output: {
     path: './src/front/js/',
@@ -7,16 +7,19 @@ module.exports = {
   },
   resolve: {
       modulesDirectories: ["node_modules"],
-      extensions: ["", ".js", ".jsx"]
+      extensions: ["", ".js", ".vue"]
   },
   module: {
       loaders: [{
-          test: /\.jsx|\.js$/,
+          test: /\.js$/,
           exclude: /node_modules/,
           loader: "babel"
       }, {
           test: /\.json$/,
           loader: "json"
+      }, {
+          test: /\.vue$/,
+          loader: 'vue'
       }]
   },
 };
