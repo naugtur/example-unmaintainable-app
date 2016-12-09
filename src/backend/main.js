@@ -23,6 +23,7 @@ module.exports = {
         })
     },
     getOne(req, res) {
+      if(Math.random() < 0.1){ throw Error("foo") }
         const userId = req.params.userId
         redis.hgetall(`users:${userId}`)
             .then((user) => ({

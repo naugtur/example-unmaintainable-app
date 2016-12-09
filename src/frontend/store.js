@@ -5,7 +5,6 @@ import createLogger from 'vuex/dist/logger'
 
 Vue.use(Vuex)
 
-const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
     state: {
@@ -17,7 +16,7 @@ export default new Vuex.Store({
         getList: ({
             commit
         }) => {
-            fetch("/api/users").then((response) => (response.json())).then((result) => {
+            fetch("/api/users").then(handleHttpResponse).then((result) => {
                 commit(types.GET_LIST_SUCCESS, result)
             }, (error) => {
                 commit(types.FAIL, 'Error: ' + error.message)
@@ -26,7 +25,7 @@ export default new Vuex.Store({
         getUser: ({
             commit
         }, id) => {
-            fetch("/api/users/" + id).then((response) => (response.json())).then((result) => {
+            fetch("/api/users/" + id).then(handleHttpResponse).then((result) => {
                 commit(types.GET_USER_SUCCESS, result)
             }, (error) => {
                 commit(types.FAIL, 'Error: ' + error.message)
@@ -55,3 +54,12 @@ export default new Vuex.Store({
     strict: false,
     plugins: [createLogger()]
 })
+
+
+function handleHttpResponse(response){
+  if(response.status===200){
+    return response.json()
+  } else {
+    throw Error(response.status+' Failed to load')
+  }
+}
