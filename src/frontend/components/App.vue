@@ -16,3 +16,14 @@ export default {
   components: { List, Error, User }
 }
 </script>
+
+<style scoped>
+#app{
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid #555;
+  padding: 5px;
+}
+
+
+</style>

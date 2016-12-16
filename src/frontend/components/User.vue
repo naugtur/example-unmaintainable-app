@@ -18,3 +18,10 @@ export default {
   })
 }
 </script>
+
+
+<style scoped>
+.name {
+  font-weight: bold;
+}
+</style>
